@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
   }
 
   const now = new Date();
-  const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+  const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'America/New_York' };
   const formattedDate = now.toLocaleDateString('en-US', options);
 
   res.cookie('visitCount', visitCount);
