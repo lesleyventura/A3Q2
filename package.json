@@ -1,0 +1,19 @@
+{
+  "name": "q2",
+  "version": "1.0.0",
+    "description": "An app that tracks the visit count and the last time using cookies.",
+  "main": "numOfVisits.js",
+  "scripts": {
+    "start": "node numOfVisits.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
