@@ -23,28 +23,37 @@ app.get('/', (req, res) => {
   }
 
   const now = new Date();
-  function formatDate(date) {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
-    const dayName = days[date.getDay()];
-    const monthName = months[date.getMonth()];
-    const day = date.getDate();
-    const year = date.getFullYear();
-    
-    let hours = date.getUTCHours(); // UTC hours
-    let minutes = date.getUTCMinutes(); // UTC minutes
-    let seconds = date.getUTCSeconds(); // UTC seconds
+function formatDate(date) {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const dayName = days[date.getUTCDay()];
+  const monthName = months[date.getUTCMonth()];
+  const day = date.getUTCDate();
+  const year = date.getUTCFullYear();
   
-    // Convert to EST time zone manually (UTC-5)
-    hours = (hours - 5 + 24) % 24;
-  
-    const formattedHours = hours.toString().padStart(2, '0');
-    const formattedMinutes = minutes.toString().padStart(2, '0');
-    const formattedSeconds = seconds.toString().padStart(2, '0');
-    
-    return `${dayName} ${monthName} ${day} ${formattedHours}:${minutes}:${seconds} EST ${year}`;
-  }
+  // Get the UTC time
+  let hours = date.getUTCHours();
+  let minutes = date.getUTCMinutes();
+  let seconds = date.getUTCSeconds();
+
+  // Convert UTC time to Eastern Time (ET)
+  // Adjust for Daylight Saving Time (DST) if necessary
+  const isDST = (new Date(date.getFullYear(), 0, 1).getTimezoneOffset() < date.getTimezoneOffset());
+  const offset = isDST ? -4 : -5; // EDT or EST
+  hours = (hours + offset + 24) % 24;
+
+  // Format hours, minutes, and seconds with leading zeros
+  const formattedHours = hours.toString().padStart(2, '0');
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const formattedSeconds = seconds.toString().padStart(2, '0');
+
+  // Time zone abbreviation
+  const timeZone = isDST ? 'EDT' : 'EST';
+
+  return `${dayName} ${monthName} ${day} ${formattedHours}:${formattedMinutes}:${formattedSeconds} ${timeZone} ${year}`;
+}
+
 
   const formattedDate = formatDate(now);
 
