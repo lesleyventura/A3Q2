@@ -40,7 +40,7 @@ function formatDate(date) {
   // Convert UTC time to Eastern Time (ET)
   // Adjust for Daylight Saving Time (DST) if necessary
   const isDST = (new Date(date.getFullYear(), 0, 1).getTimezoneOffset() < date.getTimezoneOffset());
-  const offset = isDST ? -4 : -5; // EDT or EST
+  const offset = isDST ? -4 : -5; // EDT (-4) or EST (-5)
   hours = (hours + offset + 24) % 24;
 
   // Format hours, minutes, and seconds with leading zeros
