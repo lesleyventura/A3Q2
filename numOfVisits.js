@@ -23,8 +23,30 @@ app.get('/', (req, res) => {
   }
 
   const now = new Date();
-  const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'America/New_York' };
-  const formattedDate = now.toLocaleDateString('en-US', options);
+  function formatDate(date) {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    const dayName = days[date.getDay()];
+    const monthName = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    
+    let hours = date.getUTCHours(); // UTC hours
+    let minutes = date.getUTCMinutes(); // UTC minutes
+    let seconds = date.getUTCSeconds(); // UTC seconds
+  
+    // Convert to EST time zone manually (UTC-5)
+    hours = (hours - 5 + 24) % 24;
+  
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = seconds.toString().padStart(2, '0');
+    
+    return `${dayName} ${monthName} ${day} ${formattedHours}:${minutes}:${seconds} EST ${year}`;
+  }
+
+  const formattedDate = formatDate(now);
 
   res.cookie('visitCount', visitCount);
   res.cookie('lastVisit', formattedDate);
