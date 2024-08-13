@@ -22,26 +22,8 @@ app.get('/', (req, res) => {
     }
   }
 
-  const now = new Date();
-  function padZero(value) {
-    return value.toString().padStart(2, "0");
-  }
 
-  function getTimezoneAbbreviation(date) {
-    // Define timezones and their abbreviations
-    const timezones = {
-      'America/New_York': 'EDT',
-      'America/Chicago': 'CDT',
-      'America/Denver': 'MDT',
-      'America/Los_Angeles': 'PDT',
-    };
-
-    const timezone = 'America/New_York';
-    const abbreviation = timezones[timezone];
-
-    return abbreviation || 'Unknown';
-  }
-
+  
   function formatDate(date) {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -49,16 +31,20 @@ app.get('/', (req, res) => {
     const dayName = days[now.getDay()];
     const monthName = months[now.getMonth()];
     const day = now.getDate();
-    var hours = padZero(now.getHours());
-    var minutes = padZero(now.getMinutes());
-    var seconds = padZero(now.getSeconds());
-    var year = padZero(now.getFullYear());
-    var timezoneAbbr = getTimezoneAbbreviation();
+    const hours = padZero(now.getHours());
+    const minutes = padZero(now.getMinutes());
+    const seconds = padZero(now.getSeconds());
+    const year = now.getFullYear();
+    
+    const timeZoneAbbr = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York', 
+      timeZoneName: 'short'
+    }).format(date).split(' ').pop();
   
     return `${dayName} ${monthName} ${day} ${hours}:${minutes}:${seconds} ${timezoneAbbr} ${year}`;
   }
 
-
+  const now = new Date();
   const formattedDate = formatDate(now);
 
   res.cookie('visitCount', visitCount);
