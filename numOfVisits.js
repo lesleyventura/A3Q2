@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
   function getTimezoneAbbreviation() {
     // Use Intl.DateTimeFormat to get the timezone abbreviation
     const formatter = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' });
-    const parts = formatter.formatToParts(date);
+    const parts = formatter.formatToParts(now);
     const timeZonePart = parts.find(part => part.type === 'timeZoneName');
     
     // Return the timezone abbreviation or a default value
