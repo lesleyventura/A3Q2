@@ -40,8 +40,9 @@ app.get('/', (req, res) => {
     const seconds = padZero(date.getSeconds());
     const year = date.getFullYear();
     
+    const timeZone = 'America/New_York';
     const timeZoneAbbr = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/New_York', 
+      timeZone,
       timeZoneName: 'short'
     }).format(date).split(' ').pop();
   
