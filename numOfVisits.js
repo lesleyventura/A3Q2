@@ -27,14 +27,19 @@ app.get('/', (req, res) => {
     return value.toString().padStart(2, "0");
   }
 
-  function getTimezoneAbbreviation() {
-    // Use Intl.DateTimeFormat to get the timezone abbreviation
-    const formatter = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' });
-    const parts = formatter.formatToParts(now);
-    const timeZonePart = parts.find(part => part.type === 'timeZoneName');
-    
-    // Return the timezone abbreviation or a default value
-    return timeZonePart ? timeZonePart.value : 'Unknown';
+  function getTimezoneAbbreviation(date) {
+    // Define timezones and their abbreviations
+    const timezones = {
+      'America/New_York': 'EDT',
+      'America/Chicago': 'CDT',
+      'America/Denver': 'MDT',
+      'America/Los_Angeles': 'PDT',
+    };
+
+    const timezone = 'America/New_York';
+    const abbreviation = timezones[timezone];
+
+    return abbreviation || 'Unknown';
   }
 
   function formatDate(date) {
