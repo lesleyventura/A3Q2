@@ -32,20 +32,20 @@ app.get('/', (req, res) => {
       return value.toString().padStart(2, "0");
     }
     
-    const dayName = days[now.getDay()];
-    const monthName = months[now.getMonth()];
-    const day = now.getDate();
-    const hours = padZero(now.getHours());
-    const minutes = padZero(now.getMinutes());
-    const seconds = padZero(now.getSeconds());
-    const year = now.getFullYear();
+    const dayName = days[date.getDay()];
+    const monthName = months[date.getMonth()];
+    const day = date.getDate();
+    const hours = padZero(date.getHours());
+    const minutes = padZero(date.getMinutes());
+    const seconds = padZero(date.getSeconds());
+    const year = date.getFullYear();
     
     const timeZoneAbbr = new Intl.DateTimeFormat('en-US', {
       timeZone: 'America/New_York', 
       timeZoneName: 'short'
     }).format(date).split(' ').pop();
   
-    return `${dayName} ${monthName} ${day} ${hours}:${minutes}:${seconds} ${timezoneAbbr} ${year}`;
+    return `${dayName} ${monthName} ${day} ${hours}:${minutes}:${seconds} ${timeZoneAbbr} ${year}`;
   }
 
   const now = new Date();
