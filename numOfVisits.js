@@ -35,9 +35,9 @@ app.get('/', (req, res) => {
     const dayName = days[date.getDay()];
     const monthName = months[date.getMonth()];
     const day = date.getDate();
-    const hours = padZero(date.getHours());
-    const minutes = padZero(date.getMinutes());
-    const seconds = padZero(date.getSeconds());
+    const hours = padZero(date.getUTCHours());
+    const minutes = padZero(date.getUTCMinutes());
+    const seconds = padZero(date.getUTCSeconds());
     const year = date.getFullYear();
     
     const timeZone = 'America/New_York';
