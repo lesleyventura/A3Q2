@@ -27,7 +27,11 @@ app.get('/', (req, res) => {
   function formatDate(date) {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  
+
+    function padZero(value) {
+      return value.toString().padStart(2, "0");
+    }
+    
     const dayName = days[now.getDay()];
     const monthName = months[now.getMonth()];
     const day = now.getDate();
